@@ -11,8 +11,18 @@ services:
       - no-new-privileges:true
     volumes:
       - "nexus-data:/nexus-data"
-    ports:
-      - 8081:8081
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.docker.network=traefik_network"
+      - "traefik.enable=true"
+      - "traefik.http.services.nexus3-secure.loadbalancer.server.port=8081"
+      - "traefik.http.routers.nexus3-secure.entrypoints=https"
+      - "traefik.http.routers.nexus3-secure.rule=Host(`nexus3.${TRAEFIK_HOST}`)"
 
 volumes:
-    nexus-data: {}
+  nexus-data: {}
+
+networks:
+  traefik_network:
+    external: true
