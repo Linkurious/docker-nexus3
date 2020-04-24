@@ -5,6 +5,3 @@ services:
   nexus3:
     volumes:
       - "/data/nexus3:/nexus-data"
-volumes:
-  nexus-data: {}
-
