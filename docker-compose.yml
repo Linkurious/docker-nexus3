@@ -21,11 +21,11 @@ services:
       - "traefik.http.services.nexus3-dockerhub.loadbalancer.server.port=8082"
       - "traefik.http.routers.nexus3-dockerhub.service=nexus3-dockerhub"
       - "traefik.http.routers.nexus3-dockerhub.entrypoints=https"
-      - "traefik.http.routers.nexus3-dockerhub.rule=Host(`hub.docker.${TRAEFIK_HOST}`)"
+      - "traefik.http.routers.nexus3-dockerhub.rule=Host(`hub.docker.nexus3.${TRAEFIK_HOST}`)"
       - "traefik.http.services.nexus3-dockerpush.loadbalancer.server.port=8083"
       - "traefik.http.routers.nexus3-dockerpush.service=nexus3-dockerpush"
       - "traefik.http.routers.nexus3-dockerpush.entrypoints=https"
-      - "traefik.http.routers.nexus3-dockerpush.rule=Host(`push.docker.${TRAEFIK_HOST}`)"
+      - "traefik.http.routers.nexus3-dockerpush.rule=Host(`push.docker.nexus3.${TRAEFIK_HOST}`)"
 
 networks:
   traefik_network:
