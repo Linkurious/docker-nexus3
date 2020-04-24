@@ -9,8 +9,6 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
-    volumes:
-      - "nexus-data:/nexus-data"
     networks:
       - traefik_network
     labels:
@@ -28,9 +26,6 @@ services:
       - "traefik.http.routers.nexus3-dockerpush.service=nexus3-dockerpush"
       - "traefik.http.routers.nexus3-dockerpush.entrypoints=https"
       - "traefik.http.routers.nexus3-dockerpush.rule=Host(`push.docker.${TRAEFIK_HOST}`)"
-
-volumes:
-  nexus-data: {}
 
 networks:
   traefik_network:
