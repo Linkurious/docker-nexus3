@@ -16,3 +16,8 @@
     https://blog.sonatype.com/using-nexus-3-as-your-repository-part-2-npm-packages or https://help.sonatype.com/repomanager3/formats/npm-registry
 ###  Backups
 https://help.sonatype.com/repomanager3/backup-and-restore
+
+### Manual static asset upload
+```
+for i in *.tar.gz; do echo $i; curl -L -v --user USER:${USER_PWD} --upload-file $i https://nexus3.linkurious.net/repository/static-assets/com/linkurious/documentation/ogma/$i; done;
+```
