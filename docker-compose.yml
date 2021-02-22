@@ -1,0 +1,34 @@
+---
+version: '3.7'
+
+services:
+  nexus3:
+    image: sonatype/nexus3:3.28.1
+    init: true
+    container_name: nexus3
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.docker.network=traefik_network"
+      - "traefik.enable=true"
+      - "traefik.http.services.nexus3-secure.loadbalancer.server.port=8081"
+      - "traefik.http.routers.nexus3-secure.service=nexus3-secure"
+      - "traefik.http.routers.nexus3-secure.tls.certresolver=gandi-cr"
+      - "traefik.http.routers.nexus3-secure.entrypoints=https,https_priv"
+      - "traefik.http.routers.nexus3-secure.rule=Host(`nexus3.${TRAEFIK_HOST}`)|| Host(`nexus3.${TRAEFIK_HOST_VPC}`)"
+      - "traefik.http.services.nexus3-dockerhub.loadbalancer.server.port=8082"
+      - "traefik.http.routers.nexus3-dockerhub.service=nexus3-dockerhub"
+      - "traefik.http.routers.nexus3-dockerhub.tls.certresolver=gandi-cr"
+      - "traefik.http.routers.nexus3-dockerhub.entrypoints=https,https_priv"
+      - "traefik.http.routers.nexus3-dockerhub.rule=Host(`hub.docker.nexus3.${TRAEFIK_HOST}`) || Host(`hub.docker.nexus3.${TRAEFIK_HOST_VPC}`)"
+      - "traefik.http.services.nexus3-dockerpush.loadbalancer.server.port=8083"
+      - "traefik.http.routers.nexus3-dockerpush.service=nexus3-dockerpush"
+      - "traefik.http.routers.nexus3-dockerpush.entrypoints=https_priv"
+      - "traefik.http.routers.nexus3-dockerpush.rule=Host(`push.docker.nexus3.${TRAEFIK_HOST_VPC}`)"
+
+networks:
+  traefik_network:
+    external: true
