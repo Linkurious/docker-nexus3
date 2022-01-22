@@ -21,3 +21,29 @@ https://help.sonatype.com/repomanager3/backup-and-restore
 ```
 for i in *.tar.gz; do echo $i; curl -L -v --user USER:${USER_PWD} --upload-file $i https://nexus3.linkurious.net/repository/static-assets/com/linkurious/documentation/ogma/$i; done;
 ```
+
+## Scaleway block storage
+### Increase block storage size
+https://www.scaleway.com/en/docs/storage/block/how-to/increase-block-volume/
+
+For backups:
+```
+umount /backup
+e2fsck -f /dev/sdb
+resize2fs /dev/sdb
+e2fsck  /dev/sdb
+mount -a
+```
+
+confirm with `df- h`
+
+For main data folder:
+```
+docker stop nexus3
+umount /data
+e2fsck -f /dev/sda
+resize2fs /dev/sda
+e2fsck  /dev/sda
+mount -a
+```
+confirm with `df- h` and `docker restart nexus3`
