@@ -1,2 +1,2 @@
-FROM sonatype/nexus3:3.36.0
+FROM sonatype/nexus3:3.37.3
 # used for dependabot
