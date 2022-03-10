@@ -31,7 +31,7 @@ services:
       - "traefik.http.services.nexus3-dockerplatypuspull.loadbalancer.server.port=8083"
         # - 'traefik.http.middlewares.platypuspull-auth.forwardauth.address=https://get.linkurio.us/api/auth/login'
       - 'traefik.http.middlewares.platypuspull-auth.forwardauth.address=https://get.linkurio.us/'
-      - 'traefik.http.middlewares.platypuspull-auth-headers.headers.customrequestheaders.Authorization=Basic YWRtaW46MzdkYWZkOTUtNWE4My00MDg4LTlmNDgtZGEzM2VkYjY1NjMz'
+      - 'traefik.http.middlewares.platypuspull-auth-headers.headers.customrequestheaders.Authorization=Basic BASE64-VALUE'
       - "traefik.http.routers.nexus3-dockerplatypuspull.middlewares=platypuspull-auth,platypuspull-auth-headers"
       - "traefik.http.routers.nexus3-dockerplatypuspull.service=nexus3-dockerpush"
       - "traefik.http.routers.nexus3-dockerplatypuspull.entrypoints=https_priv"
