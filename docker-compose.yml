@@ -28,6 +28,14 @@ services:
       - "traefik.http.routers.nexus3-dockerpush.service=nexus3-dockerpush"
       - "traefik.http.routers.nexus3-dockerpush.entrypoints=https_priv"
       - "traefik.http.routers.nexus3-dockerpush.rule=Host(`push.docker.nexus3.${TRAEFIK_HOST_VPC}`)"
+      - "traefik.http.services.nexus3-dockerplatypuspull.loadbalancer.server.port=8083"
+        # - 'traefik.http.middlewares.platypuspull-auth.forwardauth.address=https://get.linkurio.us/api/auth/login'
+      - 'traefik.http.middlewares.platypuspull-auth.forwardauth.address=https://get.linkurio.us/'
+      - 'traefik.http.middlewares.platypuspull-auth-headers.headers.customrequestheaders.Authorization=Basic YWRtaW46MzdkYWZkOTUtNWE4My00MDg4LTlmNDgtZGEzM2VkYjY1NjMz'
+      - "traefik.http.routers.nexus3-dockerplatypuspull.middlewares=platypuspull-auth,platypuspull-auth-headers"
+      - "traefik.http.routers.nexus3-dockerplatypuspull.service=nexus3-dockerpush"
+      - "traefik.http.routers.nexus3-dockerplatypuspull.entrypoints=https_priv"
+      - "traefik.http.routers.nexus3-dockerplatypuspull.rule=Host(`ppull.nexus3.${TRAEFIK_HOST_VPC}`)"
 
 networks:
   traefik_network:
