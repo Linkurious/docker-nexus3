@@ -28,6 +28,10 @@ services:
       - "traefik.http.routers.nexus3-dockerpush.service=nexus3-dockerpush"
       - "traefik.http.routers.nexus3-dockerpush.entrypoints=https_priv"
       - "traefik.http.routers.nexus3-dockerpush.rule=Host(`push.docker.nexus3.${TRAEFIK_HOST_VPC}`)"
+      - "traefik.http.services.nexus3-dockerprepush.loadbalancer.server.port=8083"
+      - "traefik.http.routers.nexus3-dockerprepush.service=nexus3-dockerprepush"
+      - "traefik.http.routers.nexus3-dockerprepush.entrypoints=https_priv"
+      - "traefik.http.routers.nexus3-dockerprepush.rule=Host(`prepush.docker.nexus3.${TRAEFIK_HOST_VPC}`)"
       - "traefik.http.services.nexus3-dockerplatypuspull.loadbalancer.server.port=8083"
       - 'traefik.http.middlewares.platypuspull-auth.forwardauth.address=https://${TRAEFIK_PLATYPUS_FORWARD_AUTH_ADDRESS}/api/auth/verify-download-secret?productKey=lke'
       - 'traefik.http.middlewares.platypuspull-auth-headers.headers.customrequestheaders.Authorization=Basic ${NEXUS_PLATYPUS_SA}'
